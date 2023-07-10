@@ -1,15 +1,15 @@
 import CreateAxios from '../utils/http/index'
 
-export const aclHttp = CreateAxios({
+export const userHttp = CreateAxios({
     requestOptions: {
-        apiUrl: '/greatShop',
-        urlPrefix: '/acl',
+        apiUrl: '/api',
+        urlPrefix: '/user',
     },
 })
 
-export const sysHttp = CreateAxios({
+export const accountHttp = CreateAxios({
     requestOptions: {
-        apiUrl: '/greatShop',
-        urlPrefix: '/sys',
+        apiUrl: '/api',
+        urlPrefix: '/account',
     },
 })

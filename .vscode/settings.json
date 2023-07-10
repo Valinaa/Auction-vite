@@ -22,6 +22,7 @@
     "Boxplot",
     "camelcase",
     "commitlint",
+    "commitlintrc",
     "concat",
     "cond",
     "consola",

@@ -40,8 +40,6 @@
         "vue-types": "^5.1.0"
     },
     "devDependencies": {
-        "@commitlint/cli": "^16.3.0",
-        "@commitlint/config-conventional": "^16.2.4",
         "@iconify/json": "^2.2.88",
         "@iconify/vue": "^4.1.1",
         "@types/node": "^17.0.45",
@@ -88,12 +86,6 @@
         "vite-svg-loader": "^4.0.0",
         "vue-eslint-parser": "^9.3.1",
         "vue-tsc": "^1.8.4"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged",
-            "commitlint": "commitlint --config .commitlintrc.js -e -V"
-        }
     },
     "lint-staged": {
         "*.{js,jsx,vue,ts,tsx}": [

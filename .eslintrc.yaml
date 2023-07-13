@@ -25,7 +25,7 @@ parserOptions:
   sourceType: module
   project:
     - './tsconfig.json'
-  tsconfigRootDir: E:\Projects\GreatShop-vite
+  tsconfigRootDir: E:\Projects\Auction-vite
   extraFileExtensions:
     - '.vue'
     - '.html'

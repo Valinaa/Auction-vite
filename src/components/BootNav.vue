@@ -5,7 +5,9 @@ import { Icon } from '@iconify/vue'
 
 import avatar from '@/assets/avatar.jpg'
 import { saveLanguage } from '@/utils/i18n'
+import defaultHttp from '@/api/http'
 
+const router = useRouter()
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 const { t, availableLocales, locale } = useI18n()
@@ -16,12 +18,14 @@ function toggleLocales() {
 }
 
 function goPage(path: string) {
-    const url = `https://${path}.valinaa-wei.tech`
-    if (path === 'www') {
-        window.location.href = url
-    } else {
-        window.open(url)
-    }
+    const data = defaultHttp
+        .get({
+            url: '/getGoodsList/1/6',
+        })
+        .then((res) => {
+            console.log(res)
+        })
+    // router.push(path)
 }
 function goGitHub() {
     window.open('https://github.com/Valinaa')
@@ -77,7 +81,7 @@ function getEmails() {
             id="nav-collapse"
             is-nav>
             <b-navbar-nav class="mr-auto">
-                <b-nav-item @click="goPage('www')">
+                <b-nav-item @click="goPage('/')">
                     <span class="span-tab">
                         <i class="menu-item-icon">
                             <Icon
@@ -88,26 +92,7 @@ function getEmails() {
                         {{ t('home') }}
                     </span>
                 </b-nav-item>
-                <b-nav-item @click="goPage('blog')">
-                    <span class="span-tab">
-                        <i class="menu-item-icon">
-                            <Icon
-                                icon="solar:document-add-broken"
-                                width="20.15"
-                                height="20.15" />
-                        </i>
-                        {{ t('blog') }}
-                    </span>
-                </b-nav-item>
-                <b-nav-item @click="goPage('muse')">
-                    <span class="span-tab">
-                        <i class="menu-item-icon">
-                            <i-tabler-bulb />
-                        </i>
-                        {{ t('muse') }}
-                    </span>
-                </b-nav-item>
-                <b-nav-item @click="goPage('life')">
+                <b-nav-item @click="goPage('/hotGoods')">
                     <span class="span-tab">
                         <i class="menu-item-icon">
                             <Icon
@@ -115,7 +100,42 @@ function getEmails() {
                                 width="20.15"
                                 height="20.15" />
                         </i>
-                        {{ t('life') }}
+                        {{ t('auction.hotGoods') }}
+                    </span>
+                </b-nav-item>
+                <b-nav-item @click="goPage('/addGoods')">
+                    <span class="span-tab">
+                        <i class="menu-item-icon">
+                            <Icon
+                                icon="solar:document-add-broken"
+                                width="20.15"
+                                height="20.15" />
+                        </i>
+                        {{ t('auction.addGoods') }}
+                    </span>
+                </b-nav-item>
+                <b-nav-item @click="goPage('/myAuctions')">
+                    <span class="span-tab">
+                        <i class="menu-item-icon">
+                            <i-tabler-bulb />
+                        </i>
+                        {{ t('auction.myAuctions') }}
+                    </span>
+                </b-nav-item>
+                <b-nav-item @click="goPage('/myGoods')">
+                    <span class="span-tab">
+                        <i class="menu-item-icon">
+                            <i-tabler-bulb />
+                        </i>
+                        {{ t('auction.myGoods') }}
+                    </span>
+                </b-nav-item>
+                <b-nav-item @click="goPage('/rank')">
+                    <span class="span-tab">
+                        <i class="menu-item-icon">
+                            <i-tabler-bulb />
+                        </i>
+                        {{ t('auction.getRanks') }}
                     </span>
                 </b-nav-item>
             </b-navbar-nav>

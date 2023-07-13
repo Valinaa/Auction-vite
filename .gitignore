@@ -129,5 +129,5 @@ dist
 # custom
 .eslintrc-auto-import.json
 .vscode
-pnpm-lock.yaml
+pnpm-lock.*
 .commitlintrc.js

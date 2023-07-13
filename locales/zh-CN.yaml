@@ -195,3 +195,10 @@ sys:
     email: 邮箱
     smsCode: 短信验证码
     mobile: 手机号码
+
+auction:
+  addGoods: 添加商品
+  myAuctions: 我的竞拍
+  myGoods: 我的商品
+  hotGoods: 热卖商品
+  getRanks: 排行榜

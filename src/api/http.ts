@@ -1,5 +1,6 @@
 import CreateAxios from '../utils/http/index'
 
+const defaultHttp = CreateAxios({})
 export const userHttp = CreateAxios({
     requestOptions: {
         apiUrl: '/api',
@@ -13,3 +14,4 @@ export const accountHttp = CreateAxios({
         urlPrefix: '/account',
     },
 })
+export default defaultHttp

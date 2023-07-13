@@ -11,7 +11,6 @@ import {
     transformerDirectives,
     transformerVariantGroup,
 } from 'unocss'
-import { presetOnu } from 'onu-ui'
 
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 
@@ -96,7 +95,6 @@ export default defineConfig({
             prefix: 'u:',
             prefixedOnly: false,
         }),
-        presetOnu(),
         presetWind(),
         presetIcons({
             warn: true,

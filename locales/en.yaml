@@ -194,11 +194,12 @@ sys:
     smsCode: SMS code
     mobile: Mobile
 auction:
+  home: Home
   addGoods: Add Goods
-  myAuctions: My Auctions
-  myGoods: My Goods
+  myAuctions: Auctions
+  myGoods: Goods
   hotGoods: Hot Goods
-  getRanks: Get Ranks
+  getRanks: Ranks
   startTime: Start Time
   salerName: Saler Name
   goodInfo: Good Info

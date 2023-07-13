@@ -254,7 +254,7 @@ function goIndexPage() {
 }
 
 .nav-item {
-    width: 100px;
+    width: 135px;
 }
 
 .container,

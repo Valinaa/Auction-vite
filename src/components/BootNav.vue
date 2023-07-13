@@ -96,7 +96,7 @@ function getEmails() {
                                 width="20.15"
                                 height="20.15" />
                         </i>
-                        {{ t('home') }}
+                        {{ t('auction.home') }}
                     </span>
                 </b-nav-item>
                 <b-nav-item @click="goPage('/hotGoods')">

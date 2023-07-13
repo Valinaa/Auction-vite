@@ -14,7 +14,6 @@ import {
     VueUseComponentsResolver,
     BootstrapVueNextResolver,
 } from 'unplugin-vue-components/resolvers'
-import { OnuResolver } from 'onu-ui'
 import {
     createStyleImportPlugin,
     ElementPlusResolve,
@@ -87,7 +86,7 @@ export default (env: ConfigEnv) => {
             eslintrc: {
                 enabled: true,
             },
-            resolvers: [ElementPlusResolver(), OnuResolver()],
+            resolvers: [ElementPlusResolver()],
         }),
         createStyleImportPlugin({
             resolves: [ElementPlusResolve()],
@@ -118,7 +117,6 @@ export default (env: ConfigEnv) => {
                     customCollections: ['own'],
                 }),
                 VueUseComponentsResolver(),
-                OnuResolver(),
             ],
         }),
         Icons({

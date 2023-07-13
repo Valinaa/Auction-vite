@@ -27,7 +27,7 @@ function goIndexPage() {
             <el-container>
                 <el-aside :width="Collapse ? '90.5px' : '220px'">
                     <el-menu
-                        class="side-bar font-mono font-bold"
+                        class="side-bar font-bold font-mono"
                         default-active="/"
                         :collapse="Collapse"
                         @mouseover="goCollapse"

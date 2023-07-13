@@ -202,3 +202,18 @@ auction:
   myGoods: 我的商品
   hotGoods: 热卖商品
   getRanks: 排行榜
+  startTime: 竞拍开始时间
+  salerName: 卖家
+  goodInfo: 商品信息
+  goodName: 商品名称
+  goodType: 商品类型
+  goodsDec: 商品描述
+  nowPrice: 当前价格
+  startPrice: 起拍价格
+  pricePlus: 最低加价幅度
+  pic: 商品图片
+  status: 状态
+  viewGood: 查看商品
+  editGood: 编辑商品
+  deleteGood: 删除商品
+  preferentialInfo: 优惠信息

@@ -7,6 +7,8 @@ import avatar from '@/assets/avatar.jpg'
 import { saveLanguage } from '@/utils/i18n'
 import defaultHttp from '@/api/http'
 
+import type { GoodsInfo } from 'types/auction'
+
 const router = useRouter()
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -18,14 +20,19 @@ function toggleLocales() {
 }
 
 function goPage(path: string) {
-    const data = defaultHttp
+    defaultHttp
         .get({
             url: '/getGoodsList/1/6',
         })
-        .then((res) => {
-            console.log(res)
+        .then((res: Array<GoodsInfo>) => {
+            const goods = JSON.stringify(res)
+            ElMessage.success('get goods success!')
+            console.log(goods)
+            router.push(`${path}/${goods}`)
         })
-    // router.push(path)
+        .catch((err: any) => {
+            ElMessage.error(err)
+        })
 }
 function goGitHub() {
     window.open('https://github.com/Valinaa')
@@ -58,7 +65,7 @@ function getEmails() {
 
 <template>
     <b-navbar
-        class="font-mono font-semibold"
+        class="font-semibold font-mono"
         toggleable="lg"
         :dark="isDark"
         :variant="isDark ? 'dark' : 'light'">

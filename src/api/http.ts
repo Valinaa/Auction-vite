@@ -1,6 +1,10 @@
 import CreateAxios from '../utils/http/index'
 
-const defaultHttp = CreateAxios({})
+const defaultHttp = CreateAxios({
+    requestOptions: {
+        apiUrl: '/auction',
+    },
+})
 export const userHttp = CreateAxios({
     requestOptions: {
         apiUrl: '/api',

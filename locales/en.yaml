@@ -193,3 +193,24 @@ sys:
     email: Email
     smsCode: SMS code
     mobile: Mobile
+auction:
+  addGoods: Add Goods
+  myAuctions: My Auctions
+  myGoods: My Goods
+  hotGoods: Hot Goods
+  getRanks: Get Ranks
+  startTime: Start Time
+  salerName: Saler Name
+  goodInfo: Good Info
+  goodName: Good Name
+  goodType: Good Type
+  goodsDec: Good Dec
+  nowPrice: Now Price
+  startPrice: Start Price
+  pricePlus: Lowest Price Plus
+  pic: Pic
+  status: Status
+  viewGood: View Good
+  editGood: Edit Good
+  deleteGood: Delete Good
+  preferentialInfo: Preferential Info

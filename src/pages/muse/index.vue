@@ -2,12 +2,12 @@
 <script setup lang="ts">
 import { ElMessage, ElNotification } from 'element-plus'
 
-import { aclHttp } from '@/api/greatShop'
+import defaultHttp from '@/api/http'
 
 const { t } = useI18n()
 
 const getPermission = () => {
-    aclHttp
+    defaultHttp
         .get({ url: '/permission' })
         .then((res: any) => {
             console.log(res)

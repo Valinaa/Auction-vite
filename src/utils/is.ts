@@ -16,7 +16,7 @@ export function isObject(val: any): val is Record<any, any> {
     return val !== null && is(val, 'Object')
 }
 
-export function isSymbol(val: any): val is Symbol {
+export function isSymbol(val: any): val is symbol {
     return is(val, 'Symbol')
 }
 

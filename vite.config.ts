@@ -27,47 +27,46 @@ export default defineConfig((env) => {
             strictPort: true,
             // 接口代理
             proxy: {
-                '/api': {
+                '/apis': {
                     target: 'http://master:8080/webroot/decision',
                     changeOrigin: true, // 允许跨域
                     // rewrite: (path) => path.replace('/api/', '/'),
                 },
-                '/greatShop': {
-                    target: 'http://master:9001',
+                '/auction': {
+                    target: 'http://localhost:8000/',
                     changeOrigin: true,
-                    // rewrite: (path) => path.replace(/^\/api/, ''),
                 },
             },
-        },
-        build: {
-            // outDir: resolve(__dirname, `dist`), // 指定输出路径
-            sourcemap: false, // 这个生产环境一定要关闭，不然打包的产物会很大
-            assetsInlineLimit: 4096, // 小于此阈值的导入或引用资源将内联为 base64 编码，以避免额外的 http 请求
-            emptyOutDir: true, // Vite 会在构建时清空该目录
-            reportCompressedSize: false,
+            build: {
+                // outDir: resolve(__dirname, `dist`), // 指定输出路径
+                sourcemap: false, // 这个生产环境一定要关闭，不然打包的产物会很大
+                assetsInlineLimit: 4096, // 小于此阈值的导入或引用资源将内联为 base64 编码，以避免额外的 http 请求
+                emptyOutDir: true, // Vite 会在构建时清空该目录
+                reportCompressedSize: false,
 
-            // 消除打包大小超过500kb警告
-            chunkSizeWarningLimit: 2000,
-            minify: 'esbuild',
-            assetsDir: 'static/assets',
-            // 静态资源打包到dist下的不同目录
-            rollupOptions: {
-                output: {
-                    compact: true, // 压缩代码，删除换行符等
-                    chunkFileNames: 'static/js/[name]-[hash].js',
-                    entryFileNames: 'static/js/[name]-[hash].js',
-                    assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+                // 消除打包大小超过500kb警告
+                chunkSizeWarningLimit: 2000,
+                minify: 'esbuild',
+                assetsDir: 'static/assets',
+                // 静态资源打包到dist下的不同目录
+                rollupOptions: {
+                    output: {
+                        compact: true, // 压缩代码，删除换行符等
+                        chunkFileNames: 'static/js/[name]-[hash].js',
+                        entryFileNames: 'static/js/[name]-[hash].js',
+                        assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+                    },
                 },
             },
-        },
-        css: {
-            preprocessorOptions: {
-                // 全局引入了 scss 的文件
-                scss: {
-                    additionalData: `@import "@/assets/styles/variables.scss";`,
-                    javascriptEnabled: true,
-                },
-            },
+            // css: {
+            //     preprocessorOptions: {
+            //         // 全局引入了 scss 的文件
+            //         scss: {
+            //             additionalData: `@import "@/assets/styles/variables.scss";`,
+            //             javascriptEnabled: true,
+            //         },
+            //     },
+            // },
         },
     }
 })

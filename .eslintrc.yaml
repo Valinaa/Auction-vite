@@ -21,11 +21,10 @@ extends:
 parser: vue-eslint-parser
 parserOptions:
   parser: '@typescript-eslint/parser'
-  ecmaVersion: 2020
+  ecmaVersion: latest
   sourceType: module
   project:
     - './tsconfig.json'
-  tsconfigRootDir: E:\Projects\Auction-vite
   extraFileExtensions:
     - '.vue'
     - '.html'
@@ -47,11 +46,6 @@ rules:
   # 禁止使用AMD或Commonjs语法如require/define
   import/no-amd: 2
   import/no-commonjs: 2
-  # 禁止使用已被废弃的语法
-  #// 不使用，耗时过高
-  import/no-deprecated: 0
-  import/no-cycle: 0
-  import/namespace: 0
   # 引入模块检查
   import/no-extraneous-dependencies:
     - 1
@@ -175,6 +169,7 @@ rules:
   consistent-return:
     - 1
     - treatUndefinedAsUnspecified: true
+  '@typescript-eslint/ban-types': 1
   # 禁止使用debugger
   no-debugger: 2
   no-constant-condition: 2 # 禁止在条件中使用常量表达式 if(true) if(1)
@@ -192,7 +187,7 @@ rules:
   no-cond-assign: 2 # 禁止在条件表达式中使用赋值语句
   no-native-reassign: 2 # 不能重写native对象
   # 代码风格
-  no-else-return: 1 # 如果if语句里面有return后面不能跟else语句
+  no-else-return: 2 # 如果if语句里面有return后面不能跟else语句
   no-multi-spaces: 1 # 不能用多余的空格
   # 对象字面量中冒号的前后空格
   key-spacing:

@@ -35,6 +35,7 @@ export default defineConfig((env) => {
                 '/auction': {
                     target: 'http://localhost:8000/',
                     changeOrigin: true,
+                    rewrite: (path) => path.replace('/auction/', '/'),
                 },
             },
             build: {

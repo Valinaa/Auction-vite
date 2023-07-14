@@ -3,13 +3,14 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { Icon } from '@iconify/vue'
 
+import router from '@/router'
+
 import avatar from '@/assets/avatar.jpg'
 import { saveLanguage } from '@/utils/i18n'
 import defaultHttp from '@/api/http'
 
 import type { GoodsInfo } from 'types/auction'
 
-const router = useRouter()
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 const { t, availableLocales, locale } = useI18n()
@@ -25,10 +26,10 @@ function goPage(path: string) {
             url: '/getGoodsList/1/6',
         })
         .then((res: Array<GoodsInfo>) => {
-            const goods = JSON.stringify(res)
+            const goods = encodeURIComponent(JSON.stringify(res))
             ElMessage.success('get goods success!')
-            console.log(goods)
-            router.push(`${path}/${goods}`)
+            const paths = `${path}/${goods}`
+            void router.push(paths)
         })
         .catch((err: any) => {
             ElMessage.error(err)

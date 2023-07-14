@@ -204,6 +204,7 @@ auction:
   hotGoods: 热卖商品
   getRanks: 排行榜
   startTime: 竞拍开始时间
+  endTime: 竞拍结束时间
   salerName: 卖家
   goodInfo: 商品信息
   goodName: 商品名称

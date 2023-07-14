@@ -201,6 +201,7 @@ auction:
   hotGoods: Hot Goods
   getRanks: Ranks
   startTime: Start Time
+  endTime: End Time
   salerName: Saler Name
   goodInfo: Good Info
   goodName: Good Name

@@ -199,7 +199,10 @@ auction:
   myAuctions: Auctions
   myGoods: Goods
   hotGoods: Hot Goods
+  userInfo: User Info
   getRanks: Ranks
+  shopCart: ShopCart
+  createTime: Auction Time
   startTime: Start Time
   endTime: End Time
   salerName: Saler Name
@@ -210,9 +213,14 @@ auction:
   nowPrice: Now Price
   startPrice: Start Price
   pricePlus: Lowest Price Plus
+  deleteCart: Delete
   pic: Pic
   status: Status
   viewGood: View Good
   editGood: Edit Good
   deleteGood: Delete Good
   preferentialInfo: Preferential Info
+  viewRank: View Rank
+  rank: Rank
+  rankName: Name
+  rankPrice: Price

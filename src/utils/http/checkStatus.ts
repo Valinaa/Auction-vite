@@ -4,6 +4,7 @@ import type { ErrorMessageMode } from 'types/axios'
 
 // const stp = SessionTimeoutProcessingEnum.ROUTE_JUMP
 
+// eslint-disable-next-line complexity
 export default function checkStatus(
     status: number,
     msg: string,

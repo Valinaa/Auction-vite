@@ -14,7 +14,6 @@ import { useErrorLogStoreWithOut } from '@/store/errorLog'
 import i18n from '../i18n'
 
 import { formatRequestDate, joinTimestamp } from './helper'
-import checkStatus from './checkStatus'
 import { VAxios } from './Axios'
 
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform'
@@ -195,10 +194,10 @@ const transform: AxiosTransform = {
     responseInterceptorsCatch: (error: any) => {
         const errorLogStore = useErrorLogStoreWithOut()
         errorLogStore.addAjaxErrorInfo(error)
-        const { response, code, message, config } = error || {}
+        const { code, message, config } = error || {}
         const errorMessageMode =
             config?.requestOptions?.errorMessageMode || 'none'
-        const msg: string = response?.data?.error?.message ?? ''
+        // const msg: string = response?.data?.error?.message ?? ''
         const err: string = error?.toString?.() ?? ''
         let errMessage = ''
 
@@ -240,7 +239,6 @@ const transform: AxiosTransform = {
             })
         }
 
-        checkStatus(error?.response?.status, msg, errorMessageMode)
         return Promise.reject(error)
     },
 }

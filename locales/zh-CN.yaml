@@ -200,10 +200,13 @@ auction:
   home: 竞拍首页
   addGoods: 添加商品
   myAuctions: 我的竞拍
-  myGoods: 我的商品
+  myGoods: 商品列表
   hotGoods: 热卖商品
+  userInfo: 个人信息
   getRanks: 排行榜
+  shopCart: 购物车
   startTime: 竞拍开始时间
+  createTime: 竞拍时间
   endTime: 竞拍结束时间
   salerName: 卖家
   goodInfo: 商品信息
@@ -214,8 +217,13 @@ auction:
   startPrice: 起拍价格
   pricePlus: 最低加价幅度
   pic: 商品图片
+  deleteCart: 移除商品
   status: 状态
   viewGood: 查看商品
   editGood: 编辑商品
   deleteGood: 删除商品
   preferentialInfo: 优惠信息
+  viewRank: 查看排名
+  rank: 排名
+  rankName: 昵称
+  rankPrice: 出价

@@ -1,4 +1,6 @@
 // 国际化配置
+import type { App } from 'vue'
+
 import { createI18n } from 'vue-i18n'
 import messages from '@intlify/unplugin-vue-i18n/messages'
 
@@ -31,4 +33,10 @@ const i18n = createI18n({
     globalInjection: true,
     messages,
 })
+// setup i18n instance with glob
+export const setupI18n = {
+    install(app: App) {
+        app.use(i18n)
+    },
+}
 export default i18n

@@ -8,12 +8,30 @@ import router from '@/router'
 import avatar from '@/assets/avatar.jpg'
 import { saveLanguage } from '@/utils/i18n'
 import defaultHttp from '@/api/http'
+import useAuctionStore from '@/store/auction'
+import Timer from '@/utils/times'
 
-import type { GoodsInfo } from 'types/auction'
+import type { AuctionInfo, GoodsInfo, UserInfo } from 'types/auction'
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 const { t, availableLocales, locale } = useI18n()
+const { user } = storeToRefs(useAuctionStore())
+const dialogFormVisible = ref(false)
+const formLabelWidth = '140px'
+const form = reactive({
+    accountId: user.value.accountId,
+    salerName: user.value.name,
+    identity: user.value.identity,
+    goodName: '',
+    goodType: 2,
+    startPrice: 0,
+    pricePlus: 0,
+    status: -1,
+    startTime: '',
+    endTime: '',
+    goodsDec: '',
+})
 function toggleLocales() {
     const locales = availableLocales
     locale.value = locales[(locales.indexOf(locale.value) + 1) % locales.length]
@@ -21,22 +39,88 @@ function toggleLocales() {
 }
 
 function goPage(path: string) {
+    const aid = user.value.accountId
+    const url = ref('')
+    switch (path) {
+        case '/userInfo':
+            url.value = `/getAccountInfo`
+            break
+        case '/myGoods':
+            url.value = '/getGoodsList'
+            break
+        // TODO
+        case '/rank':
+            url.value = '/getAuctionRank/gid'
+            break
+        case '/myAuctions':
+            url.value = `/getAuctionRecord/${aid}`
+            break
+        // case '/shopCart':
+        //     url.value = `/getShoppingCartList/${aid}`
+        //     break
+    }
+    if (!(url.value === '/getAccountInfo')) {
+        defaultHttp
+            .get({
+                url: url.value,
+            })
+            .then((res: Array<GoodsInfo | AuctionInfo | UserInfo>) => {
+                const goods = encodeURIComponent(JSON.stringify(res))
+                ElMessage.success('get list success!')
+                const paths = `${path}/${goods}`
+                void router.push(paths)
+            })
+            .catch((err: any) => {
+                ElMessage.error(err)
+            })
+    } else {
+        defaultHttp
+            .post({
+                url: url.value,
+                data: {
+                    id: user.value.accountId,
+                    account: user.value.account,
+                    name: user.value.name,
+                    identity: user.value.identity,
+                },
+            })
+            .then((res: Array<AuctionInfo>) => {
+                const goods = encodeURIComponent(JSON.stringify(res))
+                ElMessage.success('get list success!')
+                const paths = `${path}/${goods}`
+                void router.push(paths)
+            })
+            .catch((err: any) => {
+                ElMessage.error(err)
+            })
+    }
+}
+function submitAddGood() {
+    const url = '/saveGood'
     defaultHttp
-        .get({
-            url: '/getGoodsList/1/6',
+        .post({
+            url,
+            data: form,
         })
-        .then((res: Array<GoodsInfo>) => {
-            const goods = encodeURIComponent(JSON.stringify(res))
-            ElMessage.success('get goods success!')
-            const paths = `${path}/${goods}`
-            void router.push(paths)
+        .then((res: any) => {
+            ElMessage.success('添加成功！')
+            const timer = new Timer(Date.now().toString())
+            const targetTime = new Date(form.endTime).getTime()
+            const needTime = (targetTime - Date.now()) / 1000
+            timer.start(needTime, '拍卖结束！')
+            timer.watchDestroy()
+            goPage('/myGoods')
         })
         .catch((err: any) => {
             ElMessage.error(err)
         })
+    dialogFormVisible.value = false
 }
 function goGitHub() {
     window.open('https://github.com/Valinaa')
+}
+function goIntro() {
+    window.location.href = 'https://intro.valinaa-wei.tech'
 }
 function getEmails() {
     void ElMessageBox.alert(
@@ -47,6 +131,7 @@ function getEmails() {
             <li><b>ecustck@163.com<b/></li>
             <li><b>20002605@mail.ecust.edu.cn<b/></li>
             <li><b>valinaa.chenkang@gmail.com<b/></li>
+            <li><b>kang.chen2@zatech.com<b/></li>
         <ul/>`,
         t('contact info'),
         {
@@ -89,7 +174,7 @@ function getEmails() {
             id="nav-collapse"
             is-nav>
             <b-navbar-nav class="mr-auto">
-                <b-nav-item @click="goPage('/')">
+                <b-nav-item @click="router.push('/index')">
                     <span class="span-tab">
                         <i class="menu-item-icon">
                             <Icon
@@ -100,7 +185,7 @@ function getEmails() {
                         {{ t('auction.home') }}
                     </span>
                 </b-nav-item>
-                <b-nav-item @click="goPage('/hotGoods')">
+                <b-nav-item @click="goPage('/userInfo')">
                     <span class="span-tab">
                         <i class="menu-item-icon">
                             <Icon
@@ -108,10 +193,10 @@ function getEmails() {
                                 width="20.15"
                                 height="20.15" />
                         </i>
-                        {{ t('auction.hotGoods') }}
+                        {{ t('auction.userInfo') }}
                     </span>
                 </b-nav-item>
-                <b-nav-item @click="goPage('/addGoods')">
+                <b-nav-item @click="dialogFormVisible = true">
                     <span class="span-tab">
                         <i class="menu-item-icon">
                             <Icon
@@ -138,14 +223,14 @@ function getEmails() {
                         {{ t('auction.myGoods') }}
                     </span>
                 </b-nav-item>
-                <b-nav-item @click="goPage('/rank')">
+                <!-- <b-nav-item @click="goPage('/shopCart')">
                     <span class="span-tab">
                         <i class="menu-item-icon">
                             <i-tabler-bulb />
                         </i>
-                        {{ t('auction.getRanks') }}
+                        {{ t('auction.shopCart') }}
                     </span>
-                </b-nav-item>
+                </b-nav-item> -->
             </b-navbar-nav>
 
             <b-navbar-nav class="ml-auto">
@@ -182,7 +267,7 @@ function getEmails() {
                         </el-tooltip>
                     </span>
                 </b-nav-item>
-                <b-nav-item @click="goPage('intro')">
+                <b-nav-item @click="goIntro()">
                     <span class="span-tab">
                         <i style="font-size: 1.05em">
                             <i-carbon-user-speaker />
@@ -205,6 +290,70 @@ function getEmails() {
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
+    <el-dialog
+        v-model="dialogFormVisible"
+        title="添加商品">
+        <el-form :model="form">
+            <el-form-item
+                label="商品名称"
+                :label-width="formLabelWidth">
+                <el-input
+                    v-model="form.goodName"
+                    autocomplete="off" />
+            </el-form-item>
+            <el-form-item
+                label="商品描述"
+                :label-width="formLabelWidth">
+                <el-input
+                    v-model="form.goodsDec"
+                    autocomplete="off" />
+            </el-form-item>
+            <el-form-item
+                label="起拍价格"
+                :label-width="formLabelWidth">
+                <el-input-number
+                    v-model="form.startPrice"
+                    :precision="2"
+                    :step="1" />
+            </el-form-item>
+            <el-form-item
+                label="最低加价"
+                :label-width="formLabelWidth">
+                <el-input-number
+                    v-model="form.pricePlus"
+                    :precision="2"
+                    :step="1" />
+            </el-form-item>
+            <el-form-item
+                label="开始时间"
+                :label-width="formLabelWidth">
+                <el-date-picker
+                    v-model="form.startTime"
+                    type="datetime"
+                    value-format="YYYY-MM-DD HH:mm:ss"
+                    placeholder="选择开始时间" />
+            </el-form-item>
+            <el-form-item
+                label="结束时间"
+                :label-width="formLabelWidth">
+                <el-date-picker
+                    v-model="form.endTime"
+                    type="datetime"
+                    value-format="YYYY-MM-DD HH:mm:ss"
+                    placeholder="选择结束时间" />
+            </el-form-item>
+        </el-form>
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取消</el-button>
+                <el-button
+                    type="primary"
+                    @click="submitAddGood()">
+                    确认
+                </el-button>
+            </span>
+        </template>
+    </el-dialog>
 </template>
 
 <style scoped>

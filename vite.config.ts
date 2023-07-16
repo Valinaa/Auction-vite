@@ -17,6 +17,7 @@ export default defineConfig((env) => {
         resolve: {
             alias: {
                 '@': resolve(__dirname, 'src'), // 把 @ 指向到 src 目录去
+                'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
             },
         },
         server: {
@@ -37,6 +38,11 @@ export default defineConfig((env) => {
                     changeOrigin: true,
                     rewrite: (path) => path.replace('/auction/', '/'),
                 },
+                // '/auction': {
+                //     target: 'https://118.89.71.118/',
+                //     changeOrigin: true,
+                //     rewrite: (path) => path.replace('/auction/', '/'),
+                // },
             },
             build: {
                 // outDir: resolve(__dirname, `dist`), // 指定输出路径

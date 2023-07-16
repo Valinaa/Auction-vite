@@ -2,21 +2,7 @@
 <script setup lang="ts">
 import { ElMessage, ElNotification } from 'element-plus'
 
-import defaultHttp from '@/api/http'
-
 const { t } = useI18n()
-
-const getPermission = () => {
-    defaultHttp
-        .get({ url: '/permission' })
-        .then((res: any) => {
-            console.log(res)
-        })
-        .catch((err: any) => {
-            console.error(err)
-        })
-}
-// axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*'
 ElMessage.success({
     message: t('welcome'),
     duration: 1000,
@@ -25,19 +11,14 @@ ElNotification({
     title: 'Issue',
     message: `${t(
         'issue'
-    )}<br/><b><i>https://github.com/Valinaa/Site-Pages/issues<i/><b/>`,
+    )}<br/><b><i>https://github.com/Valinaa/Auction/issues<i/><b/>`,
     dangerouslyUseHTMLString: true,
     duration: 5000,
 })
 </script>
 
 <template>
-    <div class="mx-auto mt-10 max-w-3xl container">text text</div>
-    <el-button
-        type="success"
-        @click="getPermission">
-        get list
-    </el-button>
+    <div class="mx-auto mt-10 max-w-3xl container"></div>
 </template>
 
 <style lang="scss" scoped>

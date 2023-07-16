@@ -231,6 +231,8 @@ rules:
         - '403'
         - '401'
         - index
+        - register
+        - login
 settings:
   prettier-vue:
     SFCBlocks:

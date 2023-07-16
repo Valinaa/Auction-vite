@@ -1,7 +1,10 @@
 import { createPinia } from 'pinia'
 
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import { createPersistedState } from 'pinia-plugin-persistedstate'
 
-const store = createPinia()
-store.use(piniaPluginPersistedstate)
-export default store
+export const pinia = createPinia()
+pinia.use(createPersistedState({}))
+// export default pinia;
+export function usePiniaStore(app: any) {
+    app.use(pinia) // 注册给app
+}

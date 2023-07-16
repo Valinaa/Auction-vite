@@ -1,6 +1,7 @@
 import CreateAxios from '../utils/http/index'
 
 const defaultHttp = CreateAxios({
+    // baseURL: 'https://118.89.71.118',
     requestOptions: {
         apiUrl: '/auction',
     },

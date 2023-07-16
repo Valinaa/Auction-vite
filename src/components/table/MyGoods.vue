@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus'
 
+import router from '@/router'
+
+import defaultHttp from '@/api/http'
+import useAuctionStore from '@/store/auction'
+
 import type { GoodsInfo } from 'types/auction'
 
+const timer = ref()
+const { user } = storeToRefs(useAuctionStore())
 const route = useRoute()
 const { t } = useI18n()
 const goodsList = (): GoodsInfo[] => {
@@ -14,17 +21,72 @@ const goodsList = (): GoodsInfo[] => {
     const result = JSON.parse(decodeURIComponent(list))
     return result
 }
+const updateStatus = () => {
+    const currentTime = new Date()
+
+    for (const item of goodsList()) {
+        const startTime = new Date(item.startTime)
+        const endTime = new Date(item.endTime)
+
+        if (currentTime < startTime) {
+            // 当前时间小于开始时间，不做任何操作
+            continue
+        } else if (currentTime >= startTime && currentTime < endTime) {
+            // 当前时间在开始时间和结束时间之间，将状态改为1
+            item.status = 1
+        } else {
+            // 当前时间超过结束时间，将状态改为2，并不再遍历该值
+            item.status = 2
+            continue
+        }
+    }
+}
+const startTimer = () => {
+    timer.value = setInterval(updateStatus, 1000) // 每秒钟执行一次
+}
+
+const stopTimer = () => {
+    clearInterval(timer.value)
+}
+
+onMounted(() => {
+    startTimer()
+})
+onUnmounted(() => {
+    stopTimer()
+})
 function ViewGood(good: GoodsInfo) {
-    console.log(good)
-    ElMessage.success('get goods success!')
+    const url = ref(`/getGoodInfoById/${good.id}/${user.value.accountId}`)
+    defaultHttp
+        .get({
+            url: url.value,
+        })
+        .then((res) => {
+            console.log(res)
+            ElMessage.success('get goods success!')
+            router.push(`/goodDesc/${encodeURIComponent(JSON.stringify(res))}`)
+        })
+        .catch((err) => {
+            ElMessage.error('get goods failed!')
+            console.log(err)
+        })
 }
-function EditGood(good: GoodsInfo) {
-    console.log(good)
-    ElMessage.success('edit goods success!')
-}
-function DeleteGood(good: GoodsInfo) {
-    console.log(good)
-    ElMessage.success('delete goods success!')
+function ViewRank(good: GoodsInfo) {
+    const url = ref(`/getAuctionRank/${good.id}`)
+    defaultHttp
+        .get({
+            url: url.value,
+        })
+        .then((res) => {
+            console.log(res)
+            ElMessage.success('get auctions rank success!')
+            router.push(
+                `/auctionRank/${encodeURIComponent(JSON.stringify(res))}`
+            )
+        })
+        .catch((err) => {
+            console.log(err)
+        })
 }
 </script>
 
@@ -64,7 +126,7 @@ function DeleteGood(good: GoodsInfo) {
             <el-table-column
                 prop="salerName"
                 :label="t('auction.salerName')"
-                width="80px"
+                width="90px"
                 align="center" />
             <el-table-column
                 :label="t('auction.goodInfo')"
@@ -77,7 +139,7 @@ function DeleteGood(good: GoodsInfo) {
                 <el-table-column
                     prop="goodType"
                     :label="t('auction.goodType')"
-                    width="50px"
+                    width="90px"
                     align="center"></el-table-column>
                 <el-table-column
                     prop="goodsDec"
@@ -87,65 +149,44 @@ function DeleteGood(good: GoodsInfo) {
                 <el-table-column
                     prop="nowPrice"
                     :label="t('auction.nowPrice')"
-                    width="60px"
+                    width="100px"
                     align="center"></el-table-column>
                 <el-table-column
                     prop="startPrice"
                     :label="t('auction.startPrice')"
-                    width="60px"
+                    width="100px"
                     align="center"></el-table-column>
             </el-table-column>
             <el-table-column
                 prop="pricePlus"
                 :label="t('auction.pricePlus')"
-                width="80px"
-                align="center" />
-            <el-table-column
-                prop="pic"
-                :label="t('auction.pic')"
-                width="80px"
+                width="160px"
                 align="center" />
             <el-table-column
                 prop="status"
                 :label="t('auction.status')"
                 width="80px"
                 align="center" />
-
-            <el-table-column
-                prop="status"
-                :label="t('auction.preferentialInfo')"
-                width="80px"
-                align="center">
-                <template #default="{ row }">
-                    <div style="display: flex; align-items: center">
-                        {{ row.ensure }}
-                        {{ row.packMail }}
-                        {{ row.oimei }}
-                    </div>
-                </template>
-            </el-table-column>
             <el-table-column
                 :label="t('operation')"
                 width="150px"
                 align="center">
                 <template #default="{ row }">
                     <el-button
+                        class="mb-1"
                         type="primary"
-                        size="small"
+                        size="large"
+                        @click="ViewRank(row)">
+                        {{ t('auction.viewRank') }}
+                    </el-button>
+                    <br />
+                    <el-button
+                        class="mt-1"
+                        type="success"
+                        size="large"
+                        :disabled="row.status === 0"
                         @click="ViewGood(row)">
                         {{ t('auction.viewGood') }}
-                    </el-button>
-                    <el-button
-                        type="warning"
-                        size="small"
-                        @click="EditGood(row)">
-                        {{ t('auction.editGood') }}
-                    </el-button>
-                    <el-button
-                        type="warning"
-                        size="small"
-                        @click="DeleteGood(row)">
-                        {{ t('auction.deleteGood') }}
                     </el-button>
                 </template>
             </el-table-column>

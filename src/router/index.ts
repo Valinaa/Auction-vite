@@ -3,6 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import NProgress from 'nprogress'
 
+import { ElMessage } from 'element-plus'
+
+import useAuctionStore from '@/store/auction'
+
 import exceptionRoutes from '@/router/route.exception'
 import asyncRoutes from '@/router/route.async'
 import commonRoutes from '@/router/route.common'
@@ -18,7 +22,6 @@ const routes: Array<RouteRecordRaw> = [
 
 const router: Router = createRouter({
     // 新的vue-router4 使用 history路由模式 和 base前缀
-    // history: createWebHashHistory(),
     // history: createWebHistory(import.meta.env.VITE_BASE),
     history: createWebHistory(),
     routes,
@@ -40,8 +43,16 @@ router.beforeEach((to, from) => {
     }
 })
 router.beforeEach((to, from, next) => {
+    const auctionStore = useAuctionStore()
+    const { isAuthenticated } = storeToRefs(auctionStore)
     if (to.matched.length === 0) {
         from.name ? next({ name: from.name }) : next('/')
+    } else if (to.meta.requireAuth && !isAuthenticated.value) {
+        ElMessage.error('请先登录!')
+        next({
+            path: '/',
+            query: { redirect: to.fullPath }, // 将跳转的路由path作为参数，登录成功后跳转到该路由
+        })
     } else {
         next()
     }

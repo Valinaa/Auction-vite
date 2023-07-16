@@ -1,21 +1,7 @@
 <script lang="ts" setup>
 import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 
-import router from '@/router'
-
 const locale = zhCn
-
-const { t } = useI18n()
-const Collapse = ref(true)
-function goCollapse() {
-    Collapse.value = false
-}
-function leaveCollapse() {
-    Collapse.value = true
-}
-function goIndexPage() {
-    void router.push('/')
-}
 </script>
 
 <template>
@@ -25,7 +11,7 @@ function goIndexPage() {
                 <BootNav />
             </el-header>
             <el-container>
-                <el-aside :width="Collapse ? '90.5px' : '220px'">
+                <!-- <el-aside :width="Collapse ? '90.5px' : '220px'">
                     <el-menu
                         class="side-bar font-bold font-mono"
                         default-active="/"
@@ -120,15 +106,15 @@ function goIndexPage() {
                             <span>Navigator Three</span>
                         </el-menu-item>
                     </el-menu>
-                </el-aside>
-                <el-container>
-                    <el-main>
-                        <router-view />
-                    </el-main>
-                    <el-footer>
-                        <TheFooter />
-                    </el-footer>
-                </el-container>
+                </el-aside> -->
+                <!-- <el-container> -->
+                <el-main>
+                    <router-view />
+                </el-main>
+                <el-footer>
+                    <TheFooter />
+                </el-footer>
+                <!-- </el-container> -->
             </el-container>
         </el-container>
     </el-config-provider>

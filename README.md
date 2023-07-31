@@ -1,13 +1,7 @@
 <br>
 
 <p align='center'>
-<a href="https://www.valinaa-wei.tech/blog">Live Demo</a>
-</p>
-
-<br>
-
-<p align='center'>
-<b>English</b> | <a href="https://github.com/Valinaa/Site-Pages/blob/main/README.zh-CN.md">简体中文</a>
+<b>English</b> | <a href="https://github.com/Valinaa/Auction-vite/blob/main/README.zh-CN.md">简体中文</a>
 </p>
 
 <br>
